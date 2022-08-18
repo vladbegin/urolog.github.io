@@ -15,7 +15,7 @@ let btn5 = document.getElementById("btn5");
 let btn6 = document.getElementById("btn6");
 
 btn1.addEventListener("click", function(){
-	tg.openLink('https://vladbegin.github.io/urolog.github.io/leiko.html');
+	tg.openTelegramLink('https://vladbegin.github.io/urolog.github.io/leiko.html');
 });
 
 btn2.addEventListener("click", function(){
