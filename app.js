@@ -1,89 +1,309 @@
-let tg = window.Telegram.WebApp;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="MobileOptimized" content="176" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title></title>
+    <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
+    <script>
+        function setThemeClass() {
+            document.documentElement.className = Telegram.WebApp.colorScheme;
+        }
+        Telegram.WebApp.onEvent('themeChanged', setThemeClass);
+        setThemeClass();
 
-tg.expand();
+    </script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+            color-scheme: var(--tg-color-scheme);
+        }
 
-tg.MainButton.textColor = "#FFFFFF";
-tg.MainButton.color = "#2cab37";
+        a {
+            color: var(--tg-theme-link-color, #2678b6);
+        }
 
-let item = "";
+        button {
+            display: block;
+            width: 100%;
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            cursor: pointer;
+        }
 
-let btn1 = document.getElementById("btn1");
-let btn2 = document.getElementById("btn2");
-let btn3 = document.getElementById("btn3");
-let btn4 = document.getElementById("btn4");
-let btn5 = document.getElementById("btn5");
-let btn6 = document.getElementById("btn6");
+        button[disabled] {
+            opacity: 0.6;
+            cursor: auto;
+            pointer-events: none;
+        }
 
-btn1.addEventListener("click", function(){
-	tg.openTelegramLink('https://vladbegin.github.io/urolog.github.io/leiko.html');
-});
+        button.close_btn {
+            /*position: fixed;*/
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0;
+            margin: 0;
+            padding: 16px 20px;
+            text-transform: uppercase;
+        }
 
-btn2.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 2!");
-		item = "2";
-		tg.MainButton.show();
-	}
-});
+        section {
+            padding: 15px 15px 65px;
+            text-align: center;
+        }
 
-btn3.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 3!");
-		item = "3";
-		tg.MainButton.show();
-	}
-});
+        p {
+            margin: 40px 0 15px;
+        }
 
-btn4.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 4!");
-		item = "4";
-		tg.MainButton.show();
-	}
-});
+        ul {
+            text-align: left;
+        }
 
-btn5.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 5!");
-		item = "5";
-		tg.MainButton.show();
-	}
-});
+        li {
+            color: var(--tg-theme-hint-color, #a8a8a8);
+        }
 
-btn6.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 6!");
-		item = "6";
-		tg.MainButton.show();
-	}
-});
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 7px;
+        }
 
+        pre {
+            background: rgba(0, 0, 0, .07);
+            border-radius: 4px;
+            padding: 4px;
+            margin: 7px 0;
+            word-break: break-all;
+            word-break: break-word;
+            white-space: pre-wrap;
+            text-align: left;
+        }
 
-Telegram.WebApp.onEvent("mainButtonClicked", function(){
-	tg.sendData(item);
-});
+        .dark pre {
+            background: rgba(255, 255, 255, .15);
+        }
 
-let usercard = document.getElementById("usercard");
+        .hint {
+            font-size: .8em;
+            color: var(--tg-theme-hint-color, #a8a8a8);
+        }
 
-let p = document.createElement("p");
+        .ok {
+            color: green;
+        }
 
-p.innerText = `${tg.initDataUnsafe.user.first_name}
-${tg.initDataUnsafe.user.last_name}`;
+        .err {
+            color: red;
+        }
 
+        #fixed_wrap {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            transform: translateY(100vh);
+        }
 
-usercard.appendChild(p); 
+        .viewport_border,
+        .viewport_stable_border {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: var(--tg-viewport-height, 100vh);
+            pointer-events: none;
+        }
+
+        .viewport_stable_border {
+            height: var(--tg-viewport-stable-height, 100vh);
+        }
+
+        .viewport_border:before,
+        .viewport_stable_border:before {
+            content: attr(text);
+            display: inline-block;
+            position: absolute;
+            background: gray;
+            right: 0;
+            top: 0;
+            font-size: 7px;
+            padding: 2px 4px;
+            vertical-align: top;
+        }
+
+        .viewport_stable_border:before {
+            background: green;
+            left: 0;
+            right: auto;
+        }
+
+        .viewport_border:after,
+        .viewport_stable_border:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            border: 2px dashed gray;
+        }
+
+        .viewport_stable_border:after {
+            border-color: green;
+        }
+
+        small {
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<section>
+    <h1 id="greeting"></h1>
+
+    <div id="buttons">
+        <button onclick="webviewExpand();">Expand Webview</button>
+        <small>(The window goes fullscreen)</small>
+        <button onclick="toggleMainButton(this);">Hide Main Button</button>
+        <small>(It hides/shows main button)</small>
+        <button id="btnTime" onclick="sendTime(10);">Send time</button>
+        <small>(The bot will recieve a message with filled <code>web_app_data</code> field)</small>
+    </div>
+
+    <h3>Test links</h3>
+    <ul>
+        <li><a href="?nextpage=1">Regular link #1</a> (opens inside webview)</li>
+        <li><a href="https://telegram.org/" target="_blank">target="_blank" link</a> (opens outside webview)</li>
+        <li><a href="javascript:window.open('https://telegram.org/');">window.open() link</a> (opens outside
+            webview)</li>
+        <li><a href="https://t.me/like">LikeBot t.me link</a> (opens inside Telegram app)</li>
+        <li><a href="tg://resolve?domain=vote">VoteBot tg:// link</a> (does not open)</li>
+    </ul>
+
+    <h3>Test permissions</h3>
+    <ul>
+        <li>
+            <a href="javascript:;" onclick="return requestLocation();">Request Location</a>
+            <span id="locationData"></span>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="return requestVideo();">Request Video</a>
+            <span id="videoData"></span>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="return requestAudio();">Request Audio</a>
+            <span id="audioData"></span>
+        </li>
+    </ul>
+
+    <h3>Init Data: </h3>
+    <pre id="initData"></pre>
+    <h3>Init Data (unsafe): </h3>
+    <pre id="initDataUnsafe"></pre>
+</section>
+
+<script type="application/javascript">
+    Telegram.WebApp.ready();
+
+    const initData = Telegram.WebApp.initData || '';
+    const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+
+    document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.first_name}!`;
+    document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
+    document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
+    document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
+
+    Telegram.WebApp.MainButton
+        .setText('CLOSE WEBVIEW')
+        .show()
+        .onClick(function(){ webviewClose(); });
+
+    Telegram.WebApp.onEvent('themeChanged', function() {
+        document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+    });
+
+    function toggleMainButton(el) {
+        const mainButton = Telegram.WebApp.MainButton;
+        if (mainButton.isVisible) {
+            mainButton.hide();
+            el.innerHTML = 'Show Main Button';
+        } else {
+            mainButton.show();
+            el.innerHTML = 'Hide Main Button';
+        }
+    }
+
+    function webviewExpand() {
+        Telegram.WebApp.expand();
+    }
+
+    function webviewClose() {
+        Telegram.WebApp.close();
+    }
+
+    function sendTime(spam) {
+        const repeat = spam ? 10 : 1;
+        for (let i = 0; i < repeat; i++) {
+            Telegram.WebApp.sendData(new Date().toString());
+        }
+    }
+
+    function requestLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.querySelector('#locationData').innerHTML = '(' + position.coords.latitude + ', ' + position.coords.longitude + ')';
+            });
+        } else {
+            document.querySelector('#locationData').innerHTML = '(Geolocation is not supported in this browser)';
+        }
+
+        return false;
+    }
+
+    function requestVideo() {
+        if (navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(function(stream) {
+                document.querySelector('#videoData').innerHTML = '(Access granted)';
+            });
+        } else {
+            document.querySelector('#videoData').innerHTML = '(Media devices is not supported in this browser)';
+        }
+        return false;
+    }
+
+    function requestAudio() {
+        if (navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
+                document.querySelector('#audioData').innerHTML = '(Access granted)';
+            });
+        } else {
+            document.querySelector('#audioData').innerHTML = '(Media devices is not supported in this browser)';
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
