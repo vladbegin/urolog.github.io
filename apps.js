@@ -5,4 +5,4 @@ tg.expand();
 tg.MainButton.textColor = "#FFFFFF";
 tg.MainButton.color = "#2cab37";
 
-td.BackButton.show
+tg.BackButton.show
